@@ -9,8 +9,17 @@ describe("checkForShip", () => {
     // initially, make an expectation about what parameters your fn will take
     // and what type they are
     player = {
-      ships: [{ locations: [0, 0] }]
+      ships: [{ locations: [[0, 0]] }]
     };
     expect(checkForShip(player, [9, 9])).to.be.false;
+  });
+
+  it("should correctly report a ship located at a given player's coordinate", () => {
+    // initially, make an expectation about what parameters your fn will take
+    // and what type they are
+    player = {
+      ships: [{ locations: [[0, 0]] }]
+    };
+    expect(checkForShip(player, [0, 0])).to.be.true;
   });
 });

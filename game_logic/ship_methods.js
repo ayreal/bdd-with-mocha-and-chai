@@ -6,8 +6,11 @@ const checkForShip = (player, coords) => {
         actualCoords[0] === coords[0] && actualCoords[1] === coords[1]
     );
   });
+
   if (!shipPresent) {
     return false;
+  } else {
+    return true;
   }
 };
 
