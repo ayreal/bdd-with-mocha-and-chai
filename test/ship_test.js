@@ -65,20 +65,23 @@ describe("damageShip", () => {
 
 describe("fire", () => {
   const fire = require("../game_logic/ship_methods").fire;
+  let targetPlayer;
 
-  it("should register damage on a given ship at a given location", () => {
+  // beforeEach runs beforeEach spec instead of just once at the start of the suite
+  // targetPlayer will be overwritten before each test
+  // makes app state predictible between specs, even when the fn being tested has side-effects
+  beforeEach(() => {
     targetPlayer = {
       ships: [{ locations: [[0, 0]], damage: [] }]
     };
-    fire(targetPlayer, [0, 0]);
+  });
 
+  it("should register damage on a given ship at a given location", () => {
+    fire(targetPlayer, [0, 0]);
     expect(targetPlayer.ships[0].damage[0]).to.deep.equal([0, 0]);
   });
 
   it("should NOT register damage if there is no ship at given coordinates", () => {
-    targetPlayer = {
-      ships: [{ locations: [[0, 0]], damage: [] }]
-    };
     fire(targetPlayer, [0, 1]);
 
     expect(targetPlayer.ships[0].damage).to.be.empty;
