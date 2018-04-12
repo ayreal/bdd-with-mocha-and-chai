@@ -18,15 +18,15 @@ describe("checkForShip", () => {
     player = {
       ships: [{ locations: [[0, 0]] }]
     };
-    expect(checkForShip(player, [0, 0])).to.be.true;
+    expect(checkForShip(player, [0, 0])).to.deep.equal(player.ships[0]);
   });
 
   it("should handle ships located at more than one coordinate", () => {
     player = {
       ships: [{ locations: [[0, 0], [0, 1]] }]
     };
-    expect(checkForShip(player, [0, 0])).to.be.true;
-    expect(checkForShip(player, [0, 1])).to.be.true;
+    expect(checkForShip(player, [0, 0])).to.deep.equal(player.ships[0]);
+    expect(checkForShip(player, [0, 1])).to.deep.equal(player.ships[0]);
     expect(checkForShip(player, [9, 9])).to.be.false;
   });
 
@@ -38,11 +38,11 @@ describe("checkForShip", () => {
         { locations: [[6, 1], [6, 2], [6, 3]] }
       ]
     };
-    expect(checkForShip(player, [0, 0])).to.be.true;
-    expect(checkForShip(player, [0, 1])).to.be.true;
-    expect(checkForShip(player, [3, 5])).to.be.true;
-    expect(checkForShip(player, [4, 5])).to.be.true;
-    expect(checkForShip(player, [6, 3])).to.be.true;
+    expect(checkForShip(player, [0, 0])).to.deep.equal(player.ships[0]);
+    expect(checkForShip(player, [0, 1])).to.deep.equal(player.ships[0]);
+    expect(checkForShip(player, [3, 5])).to.deep.equal(player.ships[1]);
+    expect(checkForShip(player, [4, 5])).to.deep.equal(player.ships[1]);
+    expect(checkForShip(player, [6, 3])).to.deep.equal(player.ships[2]);
     expect(checkForShip(player, [9, 9])).to.be.false;
   });
 });
@@ -59,5 +59,18 @@ describe("damageShip", () => {
   it("should register damage on a given ship at a given location", () => {
     expect(ship.damage).to.not.be.empty;
     expect(ship.damage[0]).to.deep.equal([0, 0]);
+  });
+});
+
+describe("fire", () => {
+  const fire = require("../game_logic/ship_methods").fire;
+
+  it("should register damage on a given ship at a given location", () => {
+    targetPlayer = {
+      ships: [{ locations: [[0, 0]], damage: [] }]
+    };
+    fire(targetPlayer, [0, 0]);
+
+    expect(targetPlayer.ships[0].damage[0]).to.deep.equal([0, 0]);
   });
 });
