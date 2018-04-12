@@ -32,12 +32,17 @@ describe("checkForShip", () => {
 
   it("should handle multiple ships", () => {
     player = {
-      ships: [{ locations: [[0, 0], [0, 1]] }, { locations: [[3, 5], [4, 5]] }]
+      ships: [
+        { locations: [[0, 0], [0, 1]] },
+        { locations: [[3, 5], [4, 5]] },
+        { locations: [[6, 1], [6, 2], [6, 3]] }
+      ]
     };
     expect(checkForShip(player, [0, 0])).to.be.true;
     expect(checkForShip(player, [0, 1])).to.be.true;
     expect(checkForShip(player, [3, 5])).to.be.true;
     expect(checkForShip(player, [4, 5])).to.be.true;
+    expect(checkForShip(player, [6, 3])).to.be.true;
     expect(checkForShip(player, [9, 9])).to.be.false;
   });
 });
