@@ -1,11 +1,12 @@
-var expect = require('chai').expect;
+var expect = require("chai").expect;
 
-describe('PLAYER METHODS', function () {
-  describe('validateLocation', function () {
-    var validateLocation = require('../game_logic/player_methods.js').validateLocation;
+describe("PLAYER METHODS", function() {
+  describe("validateLocation", function() {
+    var validateLocation = require("../game_logic/player_methods.js")
+      .validateLocation;
     var player;
 
-    beforeEach(function () {
+    beforeEach(function() {
       player = {
         ships: [
           {
@@ -15,21 +16,21 @@ describe('PLAYER METHODS', function () {
       };
     });
 
-    it('shoud confirm valid for unoccupied locations in range', function () {
+    it("shoud confirm valid for unoccupied locations in range", function() {
       var location = [0, 0];
       var actual = validateLocation(player, location);
 
       expect(actual).to.be.ok;
     });
 
-    it('shoud confirm INvalid for occupied locations in range', function () {
+    it("shoud confirm INvalid for occupied locations in range", function() {
       var location = [9, 9];
       var actual = validateLocation(player, location);
 
       expect(actual).to.be.false;
     });
 
-    it('shoud confirm INvalid for UNoccupied locations OUT of range', function () {
+    it("shoud confirm INvalid for UNoccupied locations OUT of range", function() {
       var locationHigh = [10, 10];
       var locationLow = [-1, -1];
 
@@ -38,11 +39,12 @@ describe('PLAYER METHODS', function () {
     });
   });
 
-  describe('validateLocations', function () {
-    var validateLocations = require('../game_logic/player_methods.js').validateLocations;
+  describe("validateLocations", function() {
+    var validateLocations = require("../game_logic/player_methods.js")
+      .validateLocations;
     var player;
 
-    beforeEach(function () {
+    beforeEach(function() {
       player = {
         ships: [
           {
@@ -52,12 +54,12 @@ describe('PLAYER METHODS', function () {
       };
     });
 
-    it('should correctly report a list of unoccupied locations is valid', function () {
+    it("should correctly report a list of unoccupied locations is valid", function() {
       var locations = [[1, 1], [1, 2], [1, 3], [1, 4]];
       expect(validateLocations(player, locations)).to.be.ok;
     });
 
-    it('should correctly report a a problem if any location in the list is invalid', function () {
+    it("should correctly report a a problem if any location in the list is invalid", function() {
       var locations = [[1, 1], [1, 2], [1, 3], [10, 10]];
       expect(validateLocations(player, locations)).to.be.false;
 
@@ -66,11 +68,11 @@ describe('PLAYER METHODS', function () {
     });
   });
 
-  describe('placeShip', function () {
-    var placeShip = require('../game_logic/player_methods.js').placeShip;
+  describe("placeShip", function() {
+    var placeShip = require("../game_logic/player_methods.js").placeShip;
     var player;
 
-    beforeEach(function () {
+    beforeEach(function() {
       player = {
         ships: [
           {
@@ -85,16 +87,30 @@ describe('PLAYER METHODS', function () {
       };
     });
 
-    it('should update a ship with a valid starting location', function () {
+    it("should update a ship with a valid starting location", function() {
       var ship = player.ships[0];
       var coordinates = [0, 1];
 
-      placeShip(player, ship, coordinates, 'horizontal');
+      placeShip(player, ship, coordinates, "horizontal");
       var actual = ship.locations;
 
       expect(actual).to.be.ok;
       expect(actual).to.have.length(1);
       expect(actual[0]).to.deep.equal([0, 1]);
+    });
+
+    // Error handling with .throw()
+
+    it("should throw an error if no direction is specified", () => {
+      const ship = player.ships[0];
+      const coordinates = [0, 1];
+
+      // handler is a test function that we would expect to throw an error
+      const handler = () => placeShip(player, ship, coordinates);
+      expect(handler).to.throw(Error);
+      expect(handler).to.throw(
+        "You left out the direction! I need that for math."
+      );
     });
   });
 });
