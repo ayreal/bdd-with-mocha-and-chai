@@ -73,4 +73,13 @@ describe("fire", () => {
 
     expect(targetPlayer.ships[0].damage[0]).to.deep.equal([0, 0]);
   });
+
+  it("should NOT register damage if there is no ship at given coordinates", () => {
+    targetPlayer = {
+      ships: [{ locations: [[0, 0]], damage: [] }]
+    };
+    fire(targetPlayer, [0, 1]);
+
+    expect(targetPlayer.ships[0].damage).to.be.empty;
+  });
 });
