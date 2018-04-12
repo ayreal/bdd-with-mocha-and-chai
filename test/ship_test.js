@@ -69,12 +69,17 @@ describe("fire", () => {
 
   // beforeEach runs beforeEach spec instead of just once at the start of the suite
   // targetPlayer will be overwritten before each test
+  // that way we can test the after effects of .fire() anew each time
   // makes app state predictible between specs, even when the fn being tested has side-effects
   beforeEach(() => {
     targetPlayer = {
       ships: [{ locations: [[0, 0]], damage: [] }]
     };
   });
+
+  // after takes one callback that will run at the very end of the test suite
+  // afterEach is the same and will run after each spec
+  // use here if needed
 
   it("should register damage on a given ship at a given location", () => {
     fire(targetPlayer, [0, 0]);
